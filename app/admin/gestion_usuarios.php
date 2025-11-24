@@ -247,7 +247,7 @@ $queryUsuarios = $link->query("SELECT * FROM usuario ORDER BY id_usuario DESC");
 
                     // Enviar datos al servidor
                     ajaxRequest({
-                        url: "procesar-nuevo-usuario.php",
+                        url: "backend/procesar-nuevo-usuario.php",
                         data: JSON.stringify(userData),
                         successCallback: function(response) {
                             if (response.success) {
@@ -326,7 +326,7 @@ $queryUsuarios = $link->query("SELECT * FROM usuario ORDER BY id_usuario DESC");
         function editarUsuario(idUsuario) {
             // Primero pedimos los datos reales del usuario
             ajaxRequest({
-                url: "obtener-usuario.php",
+                url: "backend/procesar-obtener-usuario.php",
                 data: idUsuario,
 
                 successCallback: function(response) {
@@ -387,7 +387,7 @@ $queryUsuarios = $link->query("SELECT * FROM usuario ORDER BY id_usuario DESC");
 
                         // Guardar cambios usando tu propia estructura AJAX
                         ajaxRequest({
-                            url: "procesar-editar-usuario.php",
+                            url: "backend/procesar-editar-usuario.php",
                             data: JSON.stringify(Object.fromEntries(formData)),
                             successCallback: function(resp) {
                                 if (resp.success === true) {
