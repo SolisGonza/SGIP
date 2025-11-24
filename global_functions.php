@@ -147,6 +147,46 @@ function actualizarUsuario($nombre, $correo, $rol, $estado, $id_usuario)
     return $stmt->execute();
 }
 
+function obtenerUsuario($id_usuario)
+{
+    global $link;
+
+    $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+    $stmt = $link->prepare($sql);
+
+    $stmt->bind_param("i", $id_usuario);
+
+    // Ejecutar la consulta
+    if (!$stmt->execute()) {
+        $stmt->close();
+        return [
+            "status" => "error",
+            "message" => "Error al ejecutar consulta: " . $stmt->error
+        ];
+    }
+
+    // Obtener resultado
+    $query = $stmt->get_result();
+    $usuario = $query->fetch_assoc();
+
+    $stmt->close();
+
+    if (!$usuario) {
+        return [
+            "status" => "success",
+            "data" => null,
+            "message" => "Usuario no encontrado"
+        ];
+    }
+
+    return [
+        "status" => "success",
+        "data" => $usuario
+    ];
+}
+
+
+
 function validar_usuario($email, $password)
 {
 
