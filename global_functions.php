@@ -87,7 +87,7 @@ function filasAfectadas()
 function usuarioExiste($email)
 {
     $email = limpiarDato($email);
-    $sql = "SELECT id FROM usuarios WHERE email = '$email'";
+    $sql = "SELECT id_usuario FROM usuario WHERE correo = '$email'";
     $result = ejecutarQuery($sql);
     return mysqli_num_rows($result) > 0;
 }
@@ -106,19 +106,86 @@ register_shutdown_function(function () {
     }
 });
 
-function registrarUsuario($name, $email, $password)
+function registrarUsuario($nombre, $correo, $password, $rol = 'usuario', $estado = 1)
 {
     global $link;
 
     // Encriptar contraseña
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Query simple
-    $sql = "INSERT INTO usuario (nombre, correo, contraseña, rol)
-            VALUES ('$name', '$email', '$passwordHash', 'usuario')";
+    // Consulta preparada
+    $sql = "INSERT INTO usuario (nombre, correo, contraseña, rol, estado)
+            VALUES (?, ?, ?, ?, ?)";
 
-    return $link->query($sql);
+    $stmt = $link->prepare($sql);
+    if (!$stmt) {
+        return false;
+    }
+
+    // Bind (s = string, i = integer)
+    $stmt->bind_param("ssssi", $nombre, $correo, $passwordHash, $rol, $estado);
+
+    return $stmt->execute();
 }
+
+
+function actualizarUsuario($nombre, $correo, $rol, $estado, $id_usuario)
+{
+    global $link;
+
+    // Consulta preparada
+    $sql = "UPDATE usuario SET nombre = ?, correo = ?, rol = ?, estado = ? WHERE id_usuario = ?";
+
+    $stmt = $link->prepare($sql);
+    if (!$stmt) {
+        return false;
+    }
+
+    // Bind (s = string, i = integer)
+    $stmt->bind_param("sssii", $nombre, $correo, $rol, $estado, $id_usuario);
+
+    return $stmt->execute();
+}
+
+function obtenerUsuario($id_usuario)
+{
+    global $link;
+
+    $sql = "SELECT * FROM usuario WHERE id_usuario = ?";
+    $stmt = $link->prepare($sql);
+
+    $stmt->bind_param("i", $id_usuario);
+
+    // Ejecutar la consulta
+    if (!$stmt->execute()) {
+        $stmt->close();
+        return [
+            "status" => "error",
+            "message" => "Error al ejecutar consulta: " . $stmt->error
+        ];
+    }
+
+    // Obtener resultado
+    $query = $stmt->get_result();
+    $usuario = $query->fetch_assoc();
+
+    $stmt->close();
+
+    if (!$usuario) {
+        return [
+            "status" => "success",
+            "data" => null,
+            "message" => "Usuario no encontrado"
+        ];
+    }
+
+    return [
+        "status" => "success",
+        "data" => $usuario
+    ];
+}
+
+
 
 function validar_usuario($email, $password)
 {

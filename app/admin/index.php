@@ -22,7 +22,25 @@ $totalCategorias = $link->query("SELECT COUNT(*) AS total FROM categoria")->fetc
 </head>
 
 <body>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/res/header.php'; ?>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <a href="index.php" style="text-decoration: none; color: inherit;">
+                    <h1>SG<span class="brand-accent">IP</span></h1>
+                </a>
+            </div>
+
+            <div class="nav-home">
+                <a href="/SGIP/app/admin/index.php" class="home-link" title="Ir al Inicio">
+                    <span class="home-icon">🏠</span>
+                </a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="../../logout.php" class="btn btn-outline">Cerrar Sesión</a>
+            </div>
+        </nav>
+    </header>
     <main class="admin-dashboard">
         <div class="admin-container">
             <div class="admin-header">
@@ -43,14 +61,7 @@ $totalCategorias = $link->query("SELECT COUNT(*) AS total FROM categoria")->fetc
                     <h3>Estadísticas del Sistema</h3>
                     <p>Visualiza reportes y métricas generales del uso de la plataforma.</p>
                     <button class="btn btn-secondary" onclick="mostrarEstadisticas()">Ver Estadísticas</button>
-                </div>
-
-                <div class="admin-card">
-                    <div class="admin-icon">⚙️</div>
-                    <h3>Configuración</h3>
-                    <p>Configura los parámetros generales del sistema y preferencias.</p>
-                    <button class="btn btn-secondary" onclick="mostrarConfiguracion()">Configurar</button>
-                </div> -->
+                </div>-->
             </div>
 
             <!-- Estadísticas rápidas -->
@@ -106,14 +117,21 @@ $totalCategorias = $link->query("SELECT COUNT(*) AS total FROM categoria")->fetc
 
 
         function mostrarEstadisticas() {
-            alert('Funcionalidad de estadísticas - Próximamente');
-            // Aquí redirigirías a una página de estadísticas detalladas
+            Swal.fire({
+                icon: 'info',
+                title: 'Estadísticas',
+                text: 'Funcionalidad de estadísticas - Próximamente'
+            });
         }
 
         function mostrarConfiguracion() {
-            alert('Funcionalidad de configuración - Próximamente');
-            // Aquí redirigirías a una página de configuración
+            Swal.fire({
+                icon: 'info',
+                title: 'Configuración',
+                text: 'Funcionalidad de configuración - Próximamente'
+            });
         }
+
 
         // Cargar estadísticas al iniciar
         document.addEventListener('DOMContentLoaded', cargarEstadisticas);
