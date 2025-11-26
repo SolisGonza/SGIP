@@ -10,7 +10,7 @@ CREATE TABLE categoria (
 
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
-    correo VARCHAR(255) UNIQUE NOT NULL,
+    correo VARCHAR(191) UNIQUE NOT NULL,
     contraseña VARCHAR(255) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     rol ENUM('admin', 'usuario') DEFAULT 'usuario'
@@ -19,10 +19,12 @@ CREATE TABLE usuario (
 CREATE TABLE articulo (
     id_articulo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
+    descripcion TEXT,
     precio DECIMAL(10,2) NOT NULL,
     id_usuario INT NOT NULL,
     id_categoria INT NOT NULL,
     estado TINYINT(1) DEFAULT 1,   -- 1 = activo, 0 = inactivo
+    fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES Usuario(id_usuario),
     FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 );
@@ -43,3 +45,20 @@ CREATE TABLE imagenes (
     nombre_archivo VARCHAR(255) NOT NULL,
     FOREIGN KEY (id_articulo) REFERENCES articulo(id_articulo)
 );
+
+-- Script para actualizar la base de datos SGIP con los nuevos campos
+USE sgip;
+
+-- 1. Agregar campo descripcion a la tabla articulo
+ALTER TABLE articulo 
+ADD COLUMN descripcion TEXT AFTER nombre;
+
+-- 2. Agregar campo fecha_registro a la tabla articulo si no existe
+ALTER TABLE articulo 
+ADD COLUMN fecha_registro DATETIME DEFAULT CURRENT_TIMESTAMP AFTER estado;
+
+-- Verificar los cambios
+DESCRIBE articulo;
+
+-- Mostrar algunos datos de ejemplo
+SELECT id_articulo, nombre, descripcion, precio, estado, fecha_registro FROM articulo LIMIT 5;

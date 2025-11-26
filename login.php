@@ -32,7 +32,7 @@
                 </a>
             </div>
             <div class="nav-actions">
-                <a href="register.html" class="btn btn-outline">Crear Cuenta</a>
+                <a href="register.php" class="btn btn-outline">Crear Cuenta</a>
             </div>
         </nav>
     </header>
