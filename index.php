@@ -85,11 +85,6 @@
                     <p>Obtén insights valiosos sobre tu inventario con reportes y estadísticas actualizadas.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔔</div>
-                    <h3>Alertas Inteligentes</h3>
-                    <p>Recibe notificaciones cuando tus productos estén por agotarse o necesiten atención.</p>
-                </div>
-                <div class="feature-card">
                     <div class="feature-icon">🌐</div>
                     <h3>Acceso desde Cualquier Lugar</h3>
                     <p>Gestiona tu inventario desde tu computadora, tablet o smartphone.</p>
