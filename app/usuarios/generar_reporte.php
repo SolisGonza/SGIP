@@ -349,7 +349,7 @@ while ($row = mysqli_fetch_assoc($result)) {
             <button onclick="window.print()" class="btn btn-primary">
                 🖨️ Imprimir Reporte
             </button>
-            <button onclick="window.location.href='inventario.php'" class="btn btn-secondary">
+            <button onclick="window.location.href='index.php'" class="btn btn-secondary">
                 ← Regresar al Inventario
             </button>
         </div>

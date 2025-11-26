@@ -1,6 +1,9 @@
 <?php
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/global_functions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/validar_sesion.php';
+
+validar_rol('admin');
+
 // ------------------------------
 //  CONSULTAS REALES A LA BD
 // ------------------------------

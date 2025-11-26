@@ -1,11 +1,14 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/global_functions.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/validar_sesion.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/global_functions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/validar_sesion.php';
 
-// CONSULTAS REALES A LA BD
-$totalUsuarios   = $link->query("SELECT COUNT(*) AS total FROM usuario")->fetch_assoc()['total'];
-$totalArticulos  = $link->query("SELECT COUNT(*) AS total FROM articulo")->fetch_assoc()['total'];
-$totalCategorias = $link->query("SELECT COUNT(*) AS total FROM categoria")->fetch_assoc()['total'];
+    validar_rol('admin');
+
+
+    // CONSULTAS REALES A LA BD
+    $totalUsuarios   = $link->query("SELECT COUNT(*) AS total FROM usuario")->fetch_assoc()['total'];
+    $totalArticulos  = $link->query("SELECT COUNT(*) AS total FROM articulo")->fetch_assoc()['total'];
+    $totalCategorias = $link->query("SELECT COUNT(*) AS total FROM categoria")->fetch_assoc()['total'];
 ?>
 
 <!DOCTYPE html>

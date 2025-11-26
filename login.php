@@ -1,27 +1,29 @@
 <?php
-    require_once 'global_functions.php';
+require_once 'global_functions.php';
 
-    // Si el formulario fue enviado
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+// Si el formulario fue enviado
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-        $email     = $_POST['email'];
-        $password = $_POST['password'];
+    $email     = $_POST['email'];
+    $password = $_POST['password'];
 
-        if (validar_usuario( $email, $password)) {
-            echo "no hay Error al registrar.";
-        } else {
-            echo "Error al registrar.";
-        }
+    if (validar_usuario($email, $password)) {
+        echo "no hay Error al registrar.";
+    } else {
+        echo "Error al registrar.";
     }
+}
 ?>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión - SGIP | Sistema de Gestión de Inventario Personal</title>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/res/common.php'; ?>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -50,27 +52,25 @@
                 <form class="auth-form" id="loginForm" method="POST">
                     <div class="form-group">
                         <label for="email" class="form-label">Correo Electrónico</label>
-                        <input 
-                            type="email" 
-                            id="email" 
-                            name="email" 
-                            class="form-input" 
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            class="form-input"
                             placeholder="tu@correo.com"
-                            required
-                        >
+                            required>
                         <div class="form-error" id="emailError"></div>
                     </div>
 
                     <div class="form-group">
                         <label for="password" class="form-label">Contraseña</label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password" 
-                            class="form-input" 
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="form-input"
                             placeholder="Ingresa tu contraseña"
-                            required
-                        >
+                            required>
                         <div class="form-error" id="passwordError"></div>
                     </div>
 
@@ -96,6 +96,32 @@
             </div> -->
         </div>
     </main>
+    <?php
+    // Arreglo de errores y sus mensajes
+    $errores = [
+        'password_incorrecto' => 'La contraseña que ingresaste es incorrecta.<br><br>Por favor, verifica tus datos y vuelve a intentarlo.',
+        'usuario_no_existe'   => 'El usuario que ingresaste no existe.<br><br>Por favor, verifica tus datos y vuelve a intentarlo.',
+        'missing_permissions' => 'No tienes permiso para acceder a ese módulo.<br><br>Tu sesión se ha cerrado por seguridad.<br><br><b>Por favor inicia sesión nuevamente.</b>'
+    ];
+
+    // Verificamos si hay un parámetro de error válido
+    if (isset($_GET['error']) && array_key_exists($_GET['error'], $errores)):
+        $mensaje = $errores[$_GET['error']];
+    ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Error',
+                    html: `<?php echo $mensaje; ?>`,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    // Quitamos el parámetro de la URL para que no vuelva a salir
+                    window.location.href = 'login.php';
+                });
+            });
+        </script>
+    <?php endif; ?>
 
     <script>
         document.getElementById('loginForm').addEventListener('submit', function(e) {

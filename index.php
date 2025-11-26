@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SGIP - Controla tu Inventario Personal</title>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/SGIP/res/common.php'; ?>
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
     <!-- Header -->
+
     <head class="header">
         <nav class="nav">
             <div class="nav-brand">
@@ -150,6 +153,27 @@
             </div>
         </div>
     </footer>
+
+    <?php if (isset($_GET['missing_permissions'])): ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                Swal.fire({
+                    title: 'Acceso denegado',
+                    html: `
+            No tienes permiso para acceder a ese módulo.<br><br>
+            Tu sesión se ha cerrado por seguridad.<br><br>
+            <b>Por favor inicia sesión nuevamente.</b>
+        `,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    // Quitamos el parámetro de la URL para que no vuelva a salir
+                    window.location.href = 'index.php';
+                });
+            });
+        </script>
+    <?php endif; ?>
+
 
     <script>
         function scrollToSection(sectionId) {

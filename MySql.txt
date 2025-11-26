@@ -62,3 +62,48 @@ DESCRIBE articulo;
 
 -- Mostrar algunos datos de ejemplo
 SELECT id_articulo, nombre, descripcion, precio, estado, fecha_registro FROM articulo LIMIT 5;
+
+
+
+
+USE sgip;
+
+DELIMITER //
+
+CREATE PROCEDURE actualizarUsuario(
+    IN p_nombre VARCHAR(255),
+    IN p_correo VARCHAR(255),
+    IN p_rol VARCHAR(50),
+    IN p_estado INT,
+    IN p_id_usuario INT
+)
+BEGIN
+    UPDATE usuario
+    SET nombre = p_nombre,
+        correo = p_correo,
+        rol = p_rol,
+        estado = p_estado
+    WHERE id_usuario = p_id_usuario;
+END //
+
+DELIMITER ;
+
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE registrarUsuario(
+    IN p_nombre VARCHAR(255),
+    IN p_correo VARCHAR(255),
+    IN p_contraseña VARCHAR(255),
+    IN p_rol VARCHAR(50),
+    IN p_estado INT
+)
+BEGIN
+    INSERT INTO usuario (nombre, correo, contraseña, rol, estado)
+    VALUES (p_nombre, p_correo, p_contraseña, p_rol, p_estado);
+END //
+
+DELIMITER ;
+

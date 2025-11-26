@@ -15,4 +15,4 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.all.min.js"></script>
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/Puebla/sip_v2/js/sip_global.js"></script>
+<script src="/SGIP/js/sgip_global.js"></script>
